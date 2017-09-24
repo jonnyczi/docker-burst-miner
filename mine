@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ ! -f "/config/mining.conf" ]]; then
+    cp /miner/mining.conf /config/mining.example.conf
+    echo "Please add your configurations to /config/mining.conf"
+else
+    ./miner/creepMiner /config/mining.conf
+fi
