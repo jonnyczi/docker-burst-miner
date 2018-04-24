@@ -7,7 +7,7 @@ RUN yum install -y sudo git make cmake3 wget gcc-c++ openssl-devel findutils hos
 
     && cd / \
     && git clone https://github.com/Creepsky/creepMiner.git \
-    && cd /creepMiner \
+    && cd /creepMiner && git reset --hard "2.7.15" \
     && chmod +x install-poco.sh \
     && ./install-poco.sh \
     && cmake -DCMAKE_BUILD_TYPE=RELEASE \
