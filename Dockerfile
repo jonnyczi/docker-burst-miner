@@ -40,18 +40,21 @@ RUN scl enable devtoolset-4 bash \
 FROM centos:latest
 
 COPY --from=compiler /creepMiner/bin/creepMiner /bin/creepMiner
+COPY --from=compiler /creepMiner/resources/public/ /creepMiner/public
 COPY --from=compiler /creepMiner/lib/* /usr/local/lib/
 
 EXPOSE 8124
 
-COPY mine /
+COPY mine /creepMiner/
 
-RUN chmod +x mine \
+RUN chmod +x /creepMiner/mine \
     && creepMiner \
     && mkdir /config \
     && mv /root/.creepMiner/*/mining.conf / \
     && rm -rf /root/.creepMiner \
     && sed -i 's/\/root\/\.creepMiner\/.*\/logs\//\/config\/logs\//g' mining.conf \
     && sed -i 's/\/root\/\.creepMiner\/.*\/data.db/\/config\/data.db/g' mining.conf
+
+WORKDIR /creepMiner
 
 ENTRYPOINT ./mine
